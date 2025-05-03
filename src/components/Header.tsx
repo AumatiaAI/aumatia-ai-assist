@@ -29,11 +29,11 @@ const Header: React.FC = () => {
         }`}
       >
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <a href="#" className="flex items-center">
+          <a href="#" className="flex items-center flex-1">
             <img 
               src="https://i.imgur.com/wR2n4Hg.png" 
               alt="Aumatia Logo" 
-              className="h-12 md:h-16"
+              className="h-16 md:h-20"
             />
           </a>
 

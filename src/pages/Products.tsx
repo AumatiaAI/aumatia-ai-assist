@@ -53,16 +53,16 @@ const Products: React.FC = () => {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {/* Product Card - DomiAI */}
-              <Card className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 animate-on-scroll opacity-0 translate-y-10">
-                <CardHeader className="p-6 flex flex-col items-center">
-                  <div className="w-24 h-24 mb-4">
+              <Card className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 animate-on-scroll opacity-0 translate-y-10">
+                <CardHeader className="p-6 pb-2 flex flex-col items-center">
+                  <div className="w-full mb-4 flex justify-center">
                     <img 
                       src="https://i.imgur.com/S0x8zFg.png" 
                       alt="DomiAI Logo" 
-                      className="w-full h-full object-contain"
+                      className="w-24 h-24 object-contain"
                     />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900">DomiAI</h3>
+                  <h3 className="text-2xl font-bold text-[#fa563a]">DomiAI</h3>
                   <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 mt-2">
                     Asistente de WhatsApp
                   </Badge>
@@ -75,9 +75,12 @@ const Products: React.FC = () => {
                     Desde $20 USD/mes
                   </p>
                 </CardContent>
-                <CardFooter className="px-6 pb-6 pt-2">
+                <CardFooter className="px-6 pb-6 pt-2 flex flex-col md:flex-row gap-4">
                   <Button asChild className="w-full bg-primary hover:bg-primary/90">
                     <a href="/DomiAI.html">Ver más</a>
+                  </Button>
+                  <Button asChild className="w-full bg-primary hover:bg-primary/90">
+                    <a href="/CrearCuenta.html">Activar ahora</a>
                   </Button>
                 </CardFooter>
               </Card>
