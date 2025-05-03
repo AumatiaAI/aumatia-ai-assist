@@ -43,7 +43,7 @@ const Header: React.FC = () => {
             <a href="/historias-de-exito.html" className="text-gray-800 hover:text-primary font-medium">Historias de Éxito</a>
             <a href="/recursos.html" className="text-gray-800 hover:text-primary font-medium">Recursos</a>
             <Button asChild className="bg-primary hover:bg-primary/90 text-white ml-2 px-6">
-              <a href="/login.html">Login</a>
+              <a href="/login">Login</a>
             </Button>
           </nav>
 
