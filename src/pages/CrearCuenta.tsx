@@ -87,20 +87,9 @@ const CrearCuenta = () => {
       <Header />
       
       <div className="flex-1 container mx-auto flex flex-col items-center justify-center py-16 px-4">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-gray-800 mb-3">Crea tu cuenta en Aumatia</h1>
-          <p className="text-gray-600 max-w-xl mx-auto">
-            Accede a tu panel, configura tu agente y empieza a automatizar tu negocio hoy mismo.
-          </p>
-        </div>
-        
         <Card className="w-full max-w-md shadow-lg animate-fade-in">
           <CardHeader className="text-center">
-            <img 
-              src="https://i.imgur.com/wR2n4Hg.png" 
-              alt="Aumatia Logo" 
-              className="h-12 mx-auto mb-2"
-            />
+            <h2 className="text-2xl font-bold text-[#1B3A57] mb-2">Crea tu cuenta</h2>
           </CardHeader>
           <CardContent>
             <Form {...form}>
