@@ -10,6 +10,7 @@ import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { toast } from '@/hooks/use-toast';
 import { Download, Mail } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface Resource {
   id: number;
@@ -20,6 +21,7 @@ interface Resource {
 
 const Recursos: React.FC = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const [email, setEmail] = React.useState('');
   const [acceptTerms, setAcceptTerms] = React.useState(false);
   
@@ -115,8 +117,8 @@ const Recursos: React.FC = () => {
       description: `${resourceName} ${t('download_started')}`,
     });
     
-    // In a real app, you would redirect to the download page or start the download
-    // window.location.href = '/descarga.html';
+    // Navigate to the download page with the resource name as a parameter
+    navigate(`/descarga?recurso=${resourceName}`);
   };
 
   return (

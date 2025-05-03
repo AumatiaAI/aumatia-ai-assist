@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,13 +12,19 @@ import { toast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Search } from 'lucide-react';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Form,
   FormControl,
@@ -27,6 +33,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import countries from "@/lib/countries";
 
 interface DownloadFormValues {
   nombreCompleto: string;
@@ -39,8 +46,13 @@ interface DownloadFormValues {
 const Descarga: React.FC = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const agentName = "DomiAI"; // This could be dynamic based on URL params or context
+  const [open, setOpen] = useState(false);
+  
+  // Get the resource name from URL parameters or use a default
+  const resourceParam = searchParams.get('recurso');
+  const agentName = resourceParam || "DomiAI";
   
   const formSchema = z.object({
     nombreCompleto: z.string().min(2, t('name_required')),
@@ -116,15 +128,6 @@ const Descarga: React.FC = () => {
     }
   };
 
-  const countryOptions = [
-    { value: 'colombia', label: 'Colombia' },
-    { value: 'mexico', label: 'México' },
-    { value: 'peru', label: 'Perú' },
-    { value: 'chile', label: 'Chile' },
-    { value: 'argentina', label: 'Argentina' },
-    { value: 'otro', label: t('other') },
-  ];
-
   return (
     <div className="flex flex-col min-h-screen bg-[#f7f9fc]">
       <Header />
@@ -132,7 +135,7 @@ const Descarga: React.FC = () => {
       <main className="flex-grow pt-24 pb-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-8 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700">
+            <div className="text-center mb-8 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 mt-16">
               <h1 className="text-2xl md:text-3xl font-bold text-[#1B3A57] mb-3">
                 {t('download_workflow')} {agentName}
               </h1>
@@ -203,23 +206,45 @@ const Descarga: React.FC = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>{t('country')}</FormLabel>
-                        <Select 
-                          onValueChange={field.onChange} 
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder={t('select_country')} />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {countryOptions.map((option) => (
-                              <SelectItem key={option.value} value={option.value}>
-                                {option.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        <Popover open={open} onOpenChange={setOpen}>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                aria-expanded={open}
+                                className="w-full justify-between"
+                              >
+                                {field.value
+                                  ? countries.find((country) => country.value === field.value)?.label
+                                  : t('select_country')}
+                                <Search className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-full p-0">
+                            <Command>
+                              <CommandInput placeholder={t('search_country')} className="h-9" />
+                              <CommandEmpty>{t('no_country_found')}</CommandEmpty>
+                              <CommandGroup>
+                                <div className="max-h-64 overflow-auto">
+                                  {countries.map((country) => (
+                                    <CommandItem
+                                      key={country.value}
+                                      value={country.value}
+                                      onSelect={(currentValue) => {
+                                        field.onChange(currentValue === field.value ? "" : currentValue);
+                                        setOpen(false);
+                                      }}
+                                    >
+                                      {country.label}
+                                    </CommandItem>
+                                  ))}
+                                </div>
+                              </CommandGroup>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
                         <FormMessage />
                       </FormItem>
                     )}
