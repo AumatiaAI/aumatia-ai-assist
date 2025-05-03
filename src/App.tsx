@@ -10,6 +10,8 @@ import DomiAI from "./pages/DomiAI";
 import NotFound from "./pages/NotFound";
 import CrearCuenta from "./pages/CrearCuenta";
 import Login from "./pages/Login";
+import Customizacion_DomiAI from "./pages/Customizacion_DomiAI";
+import Vinculacion_Whatsapp from "./pages/Vinculacion_Whatsapp";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +27,8 @@ const App = () => (
           <Route path="/DomiAI" element={<DomiAI />} />
           <Route path="/crear-cuenta" element={<CrearCuenta />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/customizacion-domiai" element={<Customizacion_DomiAI />} />
+          <Route path="/Vinculacion_Whatsapp.html" element={<Vinculacion_Whatsapp />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
