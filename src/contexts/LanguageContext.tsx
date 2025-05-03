@@ -283,6 +283,98 @@ const translations = {
     'es': 'Otro',
     'en': 'Other',
     'pt': 'Outro'
+  },
+  
+  // Success & Content page
+  'want_to_automate_more': {
+    'es': '¿Quieres automatizar más procesos con un agente 100% personalizado?',
+    'en': 'Want to automate more processes with a 100% customized agent?',
+    'pt': 'Quer automatizar mais processos com um agente 100% personalizado?'
+  },
+  'get_your_ai_agent_now': {
+    'es': 'Adquiere tu agente de IA ahora',
+    'en': 'Get your AI agent now',
+    'pt': 'Adquira seu agente de IA agora'
+  },
+  'thank_you_download_ready': {
+    'es': '¡Gracias! Tu descarga está lista',
+    'en': 'Thank you! Your download is ready',
+    'pt': 'Obrigado! Seu download está pronto'
+  },
+  'download_ready_description': {
+    'es': 'Hemos preparado todo para que empieces a automatizar desde hoy. Revisa el contenido y descárgalo más abajo.',
+    'en': 'We have prepared everything for you to start automating today. Check the content and download it below.',
+    'pt': 'Preparamos tudo para você começar a automatizar hoje. Confira o conteúdo e baixe-o abaixo.'
+  },
+  'included_content': {
+    'es': 'Lo que incluye:',
+    'en': 'What\'s included:',
+    'pt': 'O que está incluído:'
+  },
+  'workflow_n8n': {
+    'es': 'Workflow de N8N listo para usar',
+    'en': 'Ready-to-use N8N workflow',
+    'pt': 'Workflow N8N pronto para usar'
+  },
+  'whitepaper_pdf': {
+    'es': 'Whitepaper PDF con explicación paso a paso',
+    'en': 'Step-by-step explanation PDF whitepaper',
+    'pt': 'Whitepaper PDF com explicação passo a passo'
+  },
+  'youtube_video': {
+    'es': 'Video de YouTube explicativo',
+    'en': 'Explanatory YouTube video',
+    'pt': 'Vídeo explicativo do YouTube'
+  },
+  'download_complete_folder': {
+    'es': '🔽 Descargar carpeta completa',
+    'en': '🔽 Download complete folder',
+    'pt': '🔽 Baixar pasta completa'
+  },
+  'watch_explainer_video': {
+    'es': '▶️ Ver video explicativo',
+    'en': '▶️ Watch explainer video',
+    'pt': '▶️ Assistir vídeo explicativo'
+  },
+  'explainer_video': {
+    'es': 'Video explicativo',
+    'en': 'Explainer video',
+    'pt': 'Vídeo explicativo'
+  },
+  'video_description': {
+    'es': 'Aprende a implementar el workflow de automatización paso a paso',
+    'en': 'Learn how to implement the automation workflow step by step',
+    'pt': 'Aprenda a implementar o workflow de automação passo a passo'
+  },
+  'want_more_free_tools': {
+    'es': '¿Quieres recibir más herramientas gratuitas de IA?',
+    'en': 'Want to receive more free AI tools?',
+    'pt': 'Quer receber mais ferramentas gratuitas de IA?'
+  },
+  'send_exclusive_resources': {
+    'es': 'Te enviaremos recursos, agentes y guías exclusivas para automatizar tu negocio.',
+    'en': 'We will send you exclusive resources, agents, and guides to automate your business.',
+    'pt': 'Enviaremos recursos exclusivos, agentes e guias para automatizar seu negócio.'
+  },
+  'subscribing': {
+    'es': 'Suscribiendo...',
+    'en': 'Subscribing...',
+    'pt': 'Inscrevendo...'
+  },
+  'follow_for_updates': {
+    'es': 'Síguenos para más actualizaciones y casos reales:',
+    'en': 'Follow us for more updates and real cases:',
+    'pt': 'Siga-nos para mais atualizações e casos reais:'
+  },
+  'no_country_found': {
+    'es': 'No se encontró ningún país',
+    'en': 'No country found',
+    'pt': 'Nenhum país encontrado'
+  },
+  'search_country': {
+    'es': 'Buscar país...',
+    'en': 'Search country...',
+    'pt': 'Buscar país...'
   }
 };
 

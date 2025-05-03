@@ -7,7 +7,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { toast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -112,9 +111,8 @@ const Descarga: React.FC = () => {
         description: t('download_starting'),
       });
       
-      // Redirect to success page (this would be implemented later)
-      // For now we'll just redirect back to recursos
-      navigate('/recursos');
+      // Redirect to success page
+      navigate('/success-y-contenido');
       
     } catch (error) {
       console.error('Error submitting form:', error);
