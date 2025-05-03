@@ -28,12 +28,16 @@ const Header: React.FC = () => {
           isScrolled ? 'bg-white shadow-md' : 'bg-white/95'
         }`}
       >
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+        <div className={`container mx-auto px-4 flex items-center justify-between transition-all duration-300 ${
+          isScrolled ? 'py-2' : 'py-4'
+        }`}>
           <a href="#" className="flex items-center flex-1">
             <img 
               src="https://i.imgur.com/wR2n4Hg.png" 
               alt="Aumatia Logo" 
-              className="h-16 md:h-20"
+              className={`transition-all duration-300 ${
+                isScrolled ? 'h-12 md:h-16' : 'h-16 md:h-20'
+              }`}
             />
           </a>
 

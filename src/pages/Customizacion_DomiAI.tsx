@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Progress } from "@/components/ui/progress";
@@ -12,10 +12,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 const Customizacion_DomiAI = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [sliding, setSliding] = useState<'right' | 'left' | null>(null);
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [formData, setFormData] = useState({
     // Sección 1
     restaurantName: "",
@@ -65,49 +67,66 @@ const Customizacion_DomiAI = () => {
   const totalSteps = 4;
   const progressPercentage = ((currentStep - 1) / (totalSteps - 1)) * 100;
   
+  useEffect(() => {
+    // Add current step to completed steps if not already there
+    if (!completedSteps.includes(currentStep)) {
+      const isValid = canProceedToNext();
+      if (isValid) {
+        setCompletedSteps(prev => [...prev, currentStep]);
+      }
+    }
+  }, [formData, currentStep]);
+
+  const handleSlide = (targetStep: number) => {
+    if (targetStep === currentStep) return;
+    
+    const direction = targetStep > currentStep ? 'left' : 'right';
+    setSliding(direction);
+    setTimeout(() => {
+      setCurrentStep(targetStep);
+      setSliding(null);
+    }, 300);
+  };
+  
   const handleNext = () => {
     if (currentStep < totalSteps) {
-      setSliding('left');
-      setTimeout(() => {
-        setCurrentStep(prev => prev + 1);
-        setSliding(null);
-      }, 300);
+      // Add current step to completed steps if valid
+      if (!completedSteps.includes(currentStep) && canProceedToNext()) {
+        setCompletedSteps(prev => [...prev, currentStep]);
+      }
+      handleSlide(currentStep + 1);
     }
   };
   
   const handlePrevious = () => {
     if (currentStep > 1) {
-      setSliding('right');
-      setTimeout(() => {
-        setCurrentStep(prev => prev - 1);
-        setSliding(null);
-      }, 300);
+      handleSlide(currentStep - 1);
+    }
+  };
+
+  const handleStepClick = (stepNumber: number) => {
+    // Only allow clicking on completed steps or the next available step
+    if (completedSteps.includes(stepNumber) || stepNumber === currentStep || 
+        (Math.max(...completedSteps) === stepNumber - 1)) {
+      handleSlide(stepNumber);
+    } else {
+      toast.error("Completa los pasos anteriores primero");
     }
   };
   
-  const handleInputChange = (section: string, field: string, value: any) => {
-    setFormData(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section as keyof typeof prev],
-        [field]: value
-      }
-    }));
-  };
-  
-  const handleDirectInputChange = (field: string, value: any) => {
+  const handleInputChange = (field: string, value: any) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
   };
   
-  const handleCheckboxChange = (section: string, field: string, checked: boolean) => {
+  const handleNestedInputChange = (section: string, field: string, value: any) => {
     setFormData(prev => ({
       ...prev,
       [section]: {
-        ...prev[section as keyof typeof prev],
-        [field]: checked
+        ...prev[section as keyof typeof prev] as Record<string, any>,
+        [field]: value
       }
     }));
   };
@@ -169,35 +188,54 @@ const Customizacion_DomiAI = () => {
       
       <main className="flex-1 flex flex-col pt-24 pb-12 px-4">
         {/* Progress Steps */}
-        <div className="container mx-auto mb-8">
+        <div className="container mx-auto mb-8 sticky top-24 z-10 bg-gradient-primary py-4">
           <div className="flex justify-between items-center mb-2 overflow-x-auto py-2">
-            {['Información básica', 'Servicios', 'Menú y promociones', 'Personalización'].map((step, index) => (
-              <div key={index} className="flex flex-col items-center min-w-[80px] px-2">
-                <div className={`
-                  flex items-center justify-center w-10 h-10 rounded-full 
-                  ${currentStep > index + 1 ? 'bg-white border-2 border-primary text-primary' : 
-                    currentStep === index + 1 ? 'bg-primary text-white' : 
-                    'bg-gray-200 text-gray-500'}
-                  transition-all duration-200
-                `}>
-                  {index + 1}
+            {['Información básica', 'Servicios', 'Menú y promociones', 'Personalización'].map((step, index) => {
+              const stepNumber = index + 1;
+              const isCompleted = completedSteps.includes(stepNumber);
+              const isActive = currentStep === stepNumber;
+              const isClickable = isCompleted || stepNumber === currentStep || 
+                                 (Math.max(...completedSteps, 0) === stepNumber - 1);
+              
+              return (
+                <div 
+                  key={index} 
+                  className={cn(
+                    "flex flex-col items-center min-w-[80px] px-2",
+                    isClickable ? "cursor-pointer" : "cursor-not-allowed opacity-60"
+                  )}
+                  onClick={() => isClickable && handleStepClick(stepNumber)}
+                >
+                  <div className={cn(
+                    "flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300",
+                    isActive ? "bg-primary text-white" : 
+                    isCompleted ? "bg-white border-2 border-primary text-primary" : 
+                    "bg-gray-200 text-gray-500"
+                  )}>
+                    {stepNumber}
+                  </div>
+                  <span className="text-xs text-white mt-1 text-center">{step}</span>
                 </div>
-                <span className="text-xs text-white mt-1 text-center">{step}</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
           
-          <Progress value={progressPercentage} className="h-2" />
+          <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-primary transition-all duration-400 ease-in-out" 
+              style={{ width: `${progressPercentage}%` }}
+            />
+          </div>
         </div>
         
         <div className="container mx-auto max-w-3xl">
           {/* Form Steps */}
-          <Card className={`
-            w-full overflow-hidden transition-all duration-300 transform
-            ${sliding === 'left' ? '-translate-x-full opacity-0' : 
-              sliding === 'right' ? 'translate-x-full opacity-0' : 
-              'translate-x-0 opacity-100'}
-          `}>
+          <Card className={cn(
+            "w-full overflow-hidden transition-all duration-300 transform",
+            sliding === 'left' ? '-translate-x-full opacity-0' : 
+            sliding === 'right' ? 'translate-x-full opacity-0' : 
+            'translate-x-0 opacity-100'
+          )}>
             <CardContent className="p-6">
               {/* Step 1: Restaurant Basic Information */}
               {currentStep === 1 && (
@@ -211,7 +249,7 @@ const Customizacion_DomiAI = () => {
                         id="restaurantName" 
                         placeholder="Nombre del restaurante" 
                         value={formData.restaurantName}
-                        onChange={(e) => handleDirectInputChange('restaurantName', e.target.value)}
+                        onChange={(e) => handleInputChange('restaurantName', e.target.value)}
                       />
                     </div>
                     
@@ -222,7 +260,7 @@ const Customizacion_DomiAI = () => {
                         type="tel" 
                         placeholder="Ej: +573001234567" 
                         value={formData.phoneNumber}
-                        onChange={(e) => handleDirectInputChange('phoneNumber', e.target.value)}
+                        onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
                       />
                     </div>
                     
@@ -232,7 +270,7 @@ const Customizacion_DomiAI = () => {
                         id="foodType" 
                         placeholder="Ej: rápida, gourmet, japonesa" 
                         value={formData.foodType}
-                        onChange={(e) => handleDirectInputChange('foodType', e.target.value)}
+                        onChange={(e) => handleInputChange('foodType', e.target.value)}
                       />
                     </div>
                     
@@ -242,7 +280,7 @@ const Customizacion_DomiAI = () => {
                         id="address" 
                         placeholder="Dirección completa" 
                         value={formData.address}
-                        onChange={(e) => handleDirectInputChange('address', e.target.value)}
+                        onChange={(e) => handleInputChange('address', e.target.value)}
                       />
                     </div>
                     
@@ -252,7 +290,7 @@ const Customizacion_DomiAI = () => {
                         id="city" 
                         placeholder="Nombre de la ciudad" 
                         value={formData.city}
-                        onChange={(e) => handleDirectInputChange('city', e.target.value)}
+                        onChange={(e) => handleInputChange('city', e.target.value)}
                       />
                     </div>
                     
@@ -262,7 +300,7 @@ const Customizacion_DomiAI = () => {
                         id="schedule" 
                         placeholder="Ej: Lunes a Viernes: 8am - 10pm, Sábados y Domingos: 9am - 11pm" 
                         value={formData.schedule}
-                        onChange={(e) => handleDirectInputChange('schedule', e.target.value)}
+                        onChange={(e) => handleInputChange('schedule', e.target.value)}
                       />
                     </div>
                   </div>
@@ -291,7 +329,7 @@ const Customizacion_DomiAI = () => {
                         <Checkbox 
                           id="menu" 
                           checked={formData.services.menu}
-                          onCheckedChange={(checked) => handleCheckboxChange('services', 'menu', checked as boolean)}
+                          onCheckedChange={(checked) => handleNestedInputChange('services', 'menu', Boolean(checked))}
                         />
                         <Label htmlFor="menu" className="font-normal">Ver menú</Label>
                       </div>
@@ -300,7 +338,7 @@ const Customizacion_DomiAI = () => {
                         <Checkbox 
                           id="orders" 
                           checked={formData.services.orders}
-                          onCheckedChange={(checked) => handleCheckboxChange('services', 'orders', checked as boolean)}
+                          onCheckedChange={(checked) => handleNestedInputChange('services', 'orders', Boolean(checked))}
                         />
                         <Label htmlFor="orders" className="font-normal">Hacer pedidos</Label>
                       </div>
@@ -309,7 +347,7 @@ const Customizacion_DomiAI = () => {
                         <Checkbox 
                           id="reservations" 
                           checked={formData.services.reservations}
-                          onCheckedChange={(checked) => handleCheckboxChange('services', 'reservations', checked as boolean)}
+                          onCheckedChange={(checked) => handleNestedInputChange('services', 'reservations', Boolean(checked))}
                         />
                         <Label htmlFor="reservations" className="font-normal">Reservar mesa</Label>
                       </div>
@@ -318,7 +356,7 @@ const Customizacion_DomiAI = () => {
                         <Checkbox 
                           id="schedules" 
                           checked={formData.services.schedules}
-                          onCheckedChange={(checked) => handleCheckboxChange('services', 'schedules', checked as boolean)}
+                          onCheckedChange={(checked) => handleNestedInputChange('services', 'schedules', Boolean(checked))}
                         />
                         <Label htmlFor="schedules" className="font-normal">Mostrar horarios</Label>
                       </div>
@@ -327,7 +365,7 @@ const Customizacion_DomiAI = () => {
                         <Checkbox 
                           id="location" 
                           checked={formData.services.location}
-                          onCheckedChange={(checked) => handleCheckboxChange('services', 'location', checked as boolean)}
+                          onCheckedChange={(checked) => handleNestedInputChange('services', 'location', Boolean(checked))}
                         />
                         <Label htmlFor="location" className="font-normal">Mostrar ubicación</Label>
                       </div>
@@ -336,7 +374,7 @@ const Customizacion_DomiAI = () => {
                         <Checkbox 
                           id="promotions" 
                           checked={formData.services.promotions}
-                          onCheckedChange={(checked) => handleCheckboxChange('services', 'promotions', checked as boolean)}
+                          onCheckedChange={(checked) => handleNestedInputChange('services', 'promotions', Boolean(checked))}
                         />
                         <Label htmlFor="promotions" className="font-normal">Mostrar promociones</Label>
                       </div>
@@ -345,7 +383,7 @@ const Customizacion_DomiAI = () => {
                         <Checkbox 
                           id="humanContact" 
                           checked={formData.services.humanContact}
-                          onCheckedChange={(checked) => handleCheckboxChange('services', 'humanContact', checked as boolean)}
+                          onCheckedChange={(checked) => handleNestedInputChange('services', 'humanContact', Boolean(checked))}
                         />
                         <Label htmlFor="humanContact" className="font-normal">Contactar con un humano</Label>
                       </div>
@@ -354,7 +392,7 @@ const Customizacion_DomiAI = () => {
                         <Checkbox 
                           id="other" 
                           checked={formData.services.other}
-                          onCheckedChange={(checked) => handleCheckboxChange('services', 'other', checked as boolean)}
+                          onCheckedChange={(checked) => handleNestedInputChange('services', 'other', Boolean(checked))}
                         />
                         <Label htmlFor="other" className="font-normal">Otro</Label>
                       </div>
@@ -364,7 +402,7 @@ const Customizacion_DomiAI = () => {
                           <Input 
                             placeholder="Especifica otra funcionalidad" 
                             value={formData.services.otherText}
-                            onChange={(e) => handleInputChange('services', 'otherText', e.target.value)}
+                            onChange={(e) => handleNestedInputChange('services', 'otherText', e.target.value)}
                           />
                         </div>
                       )}
@@ -375,7 +413,7 @@ const Customizacion_DomiAI = () => {
                     <Label className="text-base font-medium">¿El bot debe permitir cambiar a atención humana en cualquier momento?</Label>
                     <RadioGroup 
                       value={formData.humanAttention} 
-                      onValueChange={(value) => handleDirectInputChange('humanAttention', value)}
+                      onValueChange={(value) => handleInputChange('humanAttention', value)}
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="humanAttentionYes" />
@@ -392,7 +430,7 @@ const Customizacion_DomiAI = () => {
                     <Label className="text-base font-medium">¿Qué tono prefieres para el bot?</Label>
                     <RadioGroup 
                       value={formData.botTone} 
-                      onValueChange={(value) => handleDirectInputChange('botTone', value)}
+                      onValueChange={(value) => handleInputChange('botTone', value)}
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="formal" id="toneFormal" />
@@ -417,7 +455,7 @@ const Customizacion_DomiAI = () => {
                         <Input 
                           placeholder="Describe el tono que prefieres" 
                           value={formData.customTone}
-                          onChange={(e) => handleDirectInputChange('customTone', e.target.value)}
+                          onChange={(e) => handleInputChange('customTone', e.target.value)}
                         />
                       </div>
                     )}
@@ -463,7 +501,7 @@ const Customizacion_DomiAI = () => {
                         id="promotions"
                         placeholder="Describe tus promociones o combos habituales"
                         value={formData.promotions}
-                        onChange={(e) => handleDirectInputChange('promotions', e.target.value)}
+                        onChange={(e) => handleInputChange('promotions', e.target.value)}
                       />
                     </div>
                     
@@ -474,7 +512,7 @@ const Customizacion_DomiAI = () => {
                         placeholder="Escribe las preguntas más comunes de tus clientes y sus respuestas"
                         className="min-h-[120px]"
                         value={formData.faqs}
-                        onChange={(e) => handleDirectInputChange('faqs', e.target.value)}
+                        onChange={(e) => handleInputChange('faqs', e.target.value)}
                       />
                     </div>
                   </div>
@@ -513,7 +551,7 @@ const Customizacion_DomiAI = () => {
                       <Label className="text-base font-medium">¿Quieres recopilar datos de los clientes?</Label>
                       <RadioGroup 
                         value={formData.collectCustomerData} 
-                        onValueChange={(value) => handleDirectInputChange('collectCustomerData', value)}
+                        onValueChange={(value) => handleInputChange('collectCustomerData', value)}
                       >
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem value="yes" id="collectDataYes" />
@@ -534,7 +572,7 @@ const Customizacion_DomiAI = () => {
                           <Checkbox 
                             id="bold" 
                             checked={formData.paymentMethods.bold}
-                            onCheckedChange={(checked) => handleCheckboxChange('paymentMethods', 'bold', checked as boolean)}
+                            onCheckedChange={(checked) => handleNestedInputChange('paymentMethods', 'bold', Boolean(checked))}
                           />
                           <Label htmlFor="bold" className="font-normal">Pasarela de pagos (Bold)</Label>
                         </div>
@@ -543,7 +581,7 @@ const Customizacion_DomiAI = () => {
                           <Checkbox 
                             id="nequi" 
                             checked={formData.paymentMethods.nequi}
-                            onCheckedChange={(checked) => handleCheckboxChange('paymentMethods', 'nequi', checked as boolean)}
+                            onCheckedChange={(checked) => handleNestedInputChange('paymentMethods', 'nequi', Boolean(checked))}
                           />
                           <Label htmlFor="nequi" className="font-normal">Nequi</Label>
                         </div>
@@ -552,7 +590,7 @@ const Customizacion_DomiAI = () => {
                           <Checkbox 
                             id="daviplata" 
                             checked={formData.paymentMethods.daviplata}
-                            onCheckedChange={(checked) => handleCheckboxChange('paymentMethods', 'daviplata', checked as boolean)}
+                            onCheckedChange={(checked) => handleNestedInputChange('paymentMethods', 'daviplata', Boolean(checked))}
                           />
                           <Label htmlFor="daviplata" className="font-normal">Daviplata</Label>
                         </div>
@@ -561,7 +599,7 @@ const Customizacion_DomiAI = () => {
                           <Checkbox 
                             id="cash" 
                             checked={formData.paymentMethods.cash}
-                            onCheckedChange={(checked) => handleCheckboxChange('paymentMethods', 'cash', checked as boolean)}
+                            onCheckedChange={(checked) => handleNestedInputChange('paymentMethods', 'cash', Boolean(checked))}
                           />
                           <Label htmlFor="cash" className="font-normal">Efectivo</Label>
                         </div>
@@ -572,7 +610,7 @@ const Customizacion_DomiAI = () => {
                       <Label className="text-base font-medium">¿Usas un sistema de pedidos o CRM?</Label>
                       <RadioGroup 
                         value={formData.usesCRM} 
-                        onValueChange={(value) => handleDirectInputChange('usesCRM', value)}
+                        onValueChange={(value) => handleInputChange('usesCRM', value)}
                       >
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem value="yes" id="crmYes" />
@@ -589,7 +627,7 @@ const Customizacion_DomiAI = () => {
                           <Input 
                             placeholder="¿Cuál sistema utilizas?" 
                             value={formData.crmName}
-                            onChange={(e) => handleDirectInputChange('crmName', e.target.value)}
+                            onChange={(e) => handleInputChange('crmName', e.target.value)}
                           />
                         </div>
                       )}
@@ -604,7 +642,7 @@ const Customizacion_DomiAI = () => {
                         step="0.1"
                         placeholder="Ej: 5" 
                         value={formData.deliveryLimit || ""}
-                        onChange={(e) => handleDirectInputChange('deliveryLimit', Number(e.target.value))}
+                        onChange={(e) => handleInputChange('deliveryLimit', Number(e.target.value))}
                       />
                     </div>
                   </div>
