@@ -48,7 +48,7 @@ const Header: React.FC = () => {
             <a href="/" className="text-gray-800 hover:text-primary font-medium">{t('home')}</a>
             <a href="/productos" className="text-gray-800 hover:text-primary font-medium">{t('products')}</a>
             <a href="/historias-de-exito" className="text-gray-800 hover:text-primary font-medium">{t('success_stories')}</a>
-            <a href="/recursos.html" className="text-gray-800 hover:text-primary font-medium">{t('resources')}</a>
+            <a href="/recursos" className="text-gray-800 hover:text-primary font-medium">{t('resources')}</a>
             <LanguageSelector />
             <Button asChild className="bg-primary hover:bg-primary/90 text-white ml-2 px-6">
               <a href="/login">{t('login')}</a>

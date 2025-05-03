@@ -17,6 +17,7 @@ import PagoYResumen from "./pages/PagoYResumen";
 import PagoExitoso from "./pages/PagoExitoso";
 import Dashboard from "./pages/Dashboard";
 import HistoriasDeExito from "./pages/HistoriasDeExito";
+import Recursos from "./pages/Recursos";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/productos" element={<Products />} />
+            <Route path="/recursos" element={<Recursos />} />
             <Route path="/DomiAI" element={<DomiAI />} />
             <Route path="/crear-cuenta" element={<CrearCuenta />} />
             <Route path="/login" element={<Login />} />
