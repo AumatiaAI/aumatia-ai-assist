@@ -15,6 +15,7 @@ import Vinculacion_Whatsapp from "./pages/Vinculacion_Whatsapp";
 import PagoYResumen from "./pages/PagoYResumen";
 import PagoExitoso from "./pages/PagoExitoso";
 import Dashboard from "./pages/Dashboard";
+import HistoriasDeExito from "./pages/HistoriasDeExito";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/pago-y-resumen" element={<PagoYResumen />} />
           <Route path="/pago-exitoso" element={<PagoExitoso />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/historias-de-exito" element={<HistoriasDeExito />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
