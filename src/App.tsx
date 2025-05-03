@@ -29,7 +29,6 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/customizacion-domiai" element={<Customizacion_DomiAI />} />
           <Route path="/vinculacion-whatsapp" element={<Vinculacion_Whatsapp />} />
-          <Route path="/Vinculacion_Whatsapp.html" element={<Vinculacion_Whatsapp />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

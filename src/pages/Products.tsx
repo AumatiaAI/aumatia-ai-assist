@@ -77,10 +77,10 @@ const Products: React.FC = () => {
                 </CardContent>
                 <CardFooter className="px-6 pb-6 pt-2 flex flex-col md:flex-row gap-4">
                   <Button asChild className="w-full bg-primary hover:bg-primary/90">
-                    <a href="/DomiAI.html">Ver más</a>
+                    <a href="/DomiAI">Ver más</a>
                   </Button>
                   <Button asChild className="w-full bg-primary hover:bg-primary/90">
-                    <a href="/CrearCuenta.html">Activar ahora</a>
+                    <a href="/crear-cuenta">Activar ahora</a>
                   </Button>
                 </CardFooter>
               </Card>
@@ -123,7 +123,7 @@ const Products: React.FC = () => {
               Activa tu primer agente hoy y empieza a vender sin estrés
             </h2>
             <Button asChild className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-100">
-              <a href="/agentes.html">
+              <a href="/productos">
                 Ver agentes
               </a>
             </Button>

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Check } from 'lucide-react';
+import { Check, MessageCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -23,8 +23,8 @@ const Vinculacion_Whatsapp = () => {
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#4A90E2] to-[#1B3A57]">
       <Header />
       
-      <main className="flex-1 flex items-center justify-center py-16 px-4">
-        <Card className="w-full max-w-lg animate-fade-in">
+      <main className="flex-1 flex items-center justify-center py-24 px-4 md:px-8 mt-5 scroll-mt-20">
+        <Card className="w-full max-w-2xl mx-auto animate-fade-in">
           <CardContent className="p-8">
             <h1 className="text-3xl font-bold mb-4 text-center">
               Vincula tu WhatsApp con DomiAI
@@ -40,11 +40,11 @@ const Vinculacion_Whatsapp = () => {
                   <img 
                     src="https://www.notacentral.com/WNC/wp-content/uploads/2021/01/feature-image.jpg" 
                     alt="Código QR para WhatsApp" 
-                    className="w-full max-w-xs rounded-md shadow-md"
+                    className="w-full max-w-[90%] mx-auto rounded-md shadow-md"
                   />
                 </div>
                 
-                <div className="flex justify-center">
+                <div className="flex justify-center mb-6">
                   <Button
                     onClick={handleScanned}
                     className="text-lg py-6 px-8 transition-all hover:scale-105"
@@ -54,7 +54,7 @@ const Vinculacion_Whatsapp = () => {
                 </div>
               </>
             ) : (
-              <div className="flex flex-col items-center text-center animate-fade-in-up">
+              <div className="flex flex-col items-center text-center animate-fade-in">
                 <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mb-6">
                   <Check className="w-12 h-12 text-white" />
                 </div>
@@ -80,6 +80,17 @@ const Vinculacion_Whatsapp = () => {
           </CardContent>
         </Card>
       </main>
+      
+      {/* WhatsApp floating button */}
+      <a 
+        href="https://wa.link/v80yk0" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#20BA5C] transition-all z-50"
+        aria-label="Contáctanos por WhatsApp"
+      >
+        <MessageCircle size={28} />
+      </a>
       
       <Footer />
     </div>
