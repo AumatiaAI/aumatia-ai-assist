@@ -16,7 +16,7 @@ const Vinculacion_Whatsapp = () => {
   };
 
   const handleContinue = () => {
-    navigate('/pago.html');
+    navigate('/pago-y-resumen');
   };
 
   return (
