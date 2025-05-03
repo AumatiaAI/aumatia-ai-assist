@@ -47,7 +47,7 @@ const CrearCuenta = () => {
       correo: "",
       whatsapp: "",
       contraseña: "",
-      checkbox_terminos: false,
+      checkbox_terminos: false as any, // Cast to 'any' to fix TypeScript error
     },
   });
 
@@ -86,8 +86,8 @@ const CrearCuenta = () => {
     <div className="flex flex-col min-h-screen">
       <Header />
       
-      <div className="flex-1 container mx-auto flex flex-col items-center justify-center py-16 px-4">
-        <Card className="w-full max-w-md shadow-lg animate-fade-in">
+      <div className="flex-1 container mx-auto flex flex-col items-center justify-center py-16 px-4 mt-16 md:mt-24">
+        <Card className="w-full max-w-md shadow-lg animate-fade-in mt-10 md:mt-6">
           <CardHeader className="text-center">
             <h2 className="text-2xl font-bold text-[#1B3A57] mb-2">Crea tu cuenta</h2>
           </CardHeader>
