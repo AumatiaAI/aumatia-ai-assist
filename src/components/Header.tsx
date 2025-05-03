@@ -39,7 +39,7 @@ const Header: React.FC = () => {
 
           <nav className="hidden md:flex items-center space-x-6 ml-auto">
             <a href="/" className="text-gray-800 hover:text-primary font-medium">Home</a>
-            <a href="/productos.html" className="text-gray-800 hover:text-primary font-medium">Productos</a>
+            <a href="/productos" className="text-gray-800 hover:text-primary font-medium">Productos</a>
             <a href="/historias-de-exito.html" className="text-gray-800 hover:text-primary font-medium">Historias de Éxito</a>
             <a href="/recursos.html" className="text-gray-800 hover:text-primary font-medium">Recursos</a>
             <Button asChild className="bg-primary hover:bg-primary/90 text-white ml-2 px-6">

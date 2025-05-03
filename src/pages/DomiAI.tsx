@@ -36,7 +36,7 @@ const DomiAI: React.FC = () => {
       <Header />
       
       <main className="flex-grow pt-24">
-        {/* Hero Section */}
+        {/* Hero Section - UPDATED to optimize image size and position */}
         <section className="bg-gradient-primary text-white py-16 md:py-20">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center">
@@ -53,11 +53,11 @@ const DomiAI: React.FC = () => {
               </div>
               
               <div className="md:w-2/5 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-100">
-                <div className="relative flex justify-center">
+                <div className="relative flex justify-center h-full items-center">
                   <img
                     src="https://i.imgur.com/S0x8zFg.png"
                     alt="DomiAI Logo"
-                    className="w-64 h-64 object-contain drop-shadow-xl"
+                    className="w-full max-w-md object-contain drop-shadow-xl"
                   />
                 </div>
               </div>
