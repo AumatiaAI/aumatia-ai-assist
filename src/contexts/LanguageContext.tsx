@@ -145,6 +145,7 @@ const translations = {
     'en': 'Buy your custom agent',
     'pt': 'Compre seu agente personalizado'
   },
+  
   // Form validation and notifications
   'error': {
     'es': 'Error',
@@ -180,6 +181,108 @@ const translations = {
     'es': 'comenzó a descargarse',
     'en': 'download started',
     'pt': 'download iniciado'
+  },
+  
+  // Download page
+  'download_workflow': {
+    'es': 'Descarga el workflow de',
+    'en': 'Download the workflow for',
+    'pt': 'Baixe o workflow do'
+  },
+  'complete_form_download': {
+    'es': 'Completa este formulario para descargar gratuitamente el workflow de automatización.',
+    'en': 'Complete this form to download the automation workflow for free.',
+    'pt': 'Preencha este formulário para baixar gratuitamente o workflow de automação.'
+  },
+  'full_name': {
+    'es': 'Nombre completo',
+    'en': 'Full name',
+    'pt': 'Nome completo'
+  },
+  'name_placeholder': {
+    'es': 'Ej: Juan Pérez',
+    'en': 'E.g., John Smith',
+    'pt': 'Ex: João Silva'
+  },
+  'email_placeholder': {
+    'es': 'Ej: juan@ejemplo.com',
+    'en': 'E.g., john@example.com',
+    'pt': 'Ex: joao@exemplo.com'
+  },
+  'phone_number': {
+    'es': 'Número de teléfono',
+    'en': 'Phone number',
+    'pt': 'Número de telefone'
+  },
+  'phone_placeholder': {
+    'es': 'Ej: +57 300 123 4567',
+    'en': 'E.g., +1 555 123 4567',
+    'pt': 'Ex: +55 11 98765 4321'
+  },
+  'country': {
+    'es': 'País',
+    'en': 'Country',
+    'pt': 'País'
+  },
+  'select_country': {
+    'es': 'Selecciona tu país',
+    'en': 'Select your country',
+    'pt': 'Selecione seu país'
+  },
+  'what_to_automate': {
+    'es': '¿Qué solución te gustaría automatizar?',
+    'en': 'What solution would you like to automate?',
+    'pt': 'Que solução você gostaria de automatizar?'
+  },
+  'automation_placeholder': {
+    'es': 'Cuéntanos sobre los procesos que te gustaría automatizar…',
+    'en': 'Tell us about the processes you would like to automate...',
+    'pt': 'Conte-nos sobre os processos que você gostaria de automatizar...'
+  },
+  'download_workflow_button': {
+    'es': 'Descargar Workflow',
+    'en': 'Download Workflow',
+    'pt': 'Baixar Workflow'
+  },
+  'download_starting': {
+    'es': 'Tu descarga comenzará en unos segundos',
+    'en': 'Your download will start in a few seconds',
+    'pt': 'Seu download começará em alguns segundos'
+  },
+  'form_error': {
+    'es': 'Ha ocurrido un error al procesar tu solicitud',
+    'en': 'An error occurred while processing your request',
+    'pt': 'Ocorreu um erro ao processar sua solicitação'
+  },
+  'name_required': {
+    'es': 'Por favor ingresa tu nombre completo',
+    'en': 'Please enter your full name',
+    'pt': 'Por favor, digite seu nome completo'
+  },
+  'valid_email_required': {
+    'es': 'Por favor ingresa un correo electrónico válido',
+    'en': 'Please enter a valid email',
+    'pt': 'Por favor, digite um email válido'
+  },
+  'valid_phone_required': {
+    'es': 'Por favor ingresa un número de teléfono válido',
+    'en': 'Please enter a valid phone number',
+    'pt': 'Por favor, digite um número de telefone válido'
+  },
+  'country_required': {
+    'es': 'Por favor selecciona tu país',
+    'en': 'Please select your country',
+    'pt': 'Por favor, selecione seu país'
+  },
+  'description_required': {
+    'es': 'Por favor describe la solución que te gustaría automatizar',
+    'en': 'Please describe the solution you would like to automate',
+    'pt': 'Por favor, descreva a solução que você gostaria de automatizar'
+  },
+  'other': {
+    'es': 'Otro',
+    'en': 'Other',
+    'pt': 'Outro'
   }
 };
 

@@ -18,6 +18,7 @@ import PagoExitoso from "./pages/PagoExitoso";
 import Dashboard from "./pages/Dashboard";
 import HistoriasDeExito from "./pages/HistoriasDeExito";
 import Recursos from "./pages/Recursos";
+import Descarga from "./pages/Descarga";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
             <Route path="/pago-exitoso" element={<PagoExitoso />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/historias-de-exito" element={<HistoriasDeExito />} />
+            <Route path="/descarga" element={<Descarga />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
