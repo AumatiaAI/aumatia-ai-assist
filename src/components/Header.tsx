@@ -33,17 +33,17 @@ const Header: React.FC = () => {
             <img 
               src="https://i.imgur.com/wR2n4Hg.png" 
               alt="Aumatia Logo" 
-              className="h-8 md:h-10"
+              className="h-12 md:h-16"
             />
           </a>
 
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-6 ml-auto">
             <a href="/" className="text-gray-800 hover:text-primary font-medium">Home</a>
             <a href="/productos.html" className="text-gray-800 hover:text-primary font-medium">Productos</a>
             <a href="/historias-de-exito.html" className="text-gray-800 hover:text-primary font-medium">Historias de Éxito</a>
-            <a href="/login.html" className="text-gray-800 hover:text-primary font-medium">Login</a>
+            <a href="/recursos.html" className="text-gray-800 hover:text-primary font-medium">Recursos</a>
             <Button asChild className="bg-primary hover:bg-primary/90 text-white ml-2 px-6">
-              <a href="/CrearCuenta.html">Empieza gratis</a>
+              <a href="/login.html">Login</a>
             </Button>
           </nav>
 

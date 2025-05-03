@@ -48,15 +48,49 @@ const Hero: React.FC = () => {
           
           <div className="md:w-2/5 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-300">
             <div className="relative">
-              <img 
-                src="https://i.imgur.com/1531297484001-80022131f5a1.jpg" 
-                alt="Aumatia WhatsApp AI Assistant" 
-                className="rounded-lg shadow-2xl mx-auto md:mx-0"
-                style={{ maxWidth: "100%", height: "auto" }}
-              />
-              <div className="absolute -bottom-6 -right-6 bg-white rounded-lg p-3 shadow-lg hidden md:block">
-                <div className="text-primary font-bold text-lg">24/7</div>
-                <div className="text-gray-600 text-sm">Siempre activo</div>
+              <div className="phone-mockup bg-white rounded-3xl shadow-xl p-3 mx-auto md:mx-0 max-w-[280px]">
+                <div className="phone-header bg-gray-100 rounded-t-xl p-2 flex items-center">
+                  <div className="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0"></div>
+                  <div className="ml-2">
+                    <div className="text-sm font-medium text-gray-800">Mi Negocio</div>
+                    <div className="text-xs text-gray-500">en línea</div>
+                  </div>
+                </div>
+                
+                <div className="chat-container p-3 bg-gray-50 h-[400px] overflow-y-auto">
+                  <div className="flex justify-end mb-3">
+                    <div className="bg-[#dcf8c6] p-3 rounded-lg max-w-[80%] shadow-sm">
+                      <p className="text-sm text-gray-800">Hola, ¿aún están abiertos hoy?</p>
+                      <p className="text-xs text-gray-500 text-right mt-1">10:45 AM</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-start mb-3">
+                    <div className="bg-[#f1f1f1] p-3 rounded-lg max-w-[80%] shadow-sm">
+                      <p className="text-sm text-gray-800">¡Hola! Sí, estamos abiertos hasta las 8pm. ¿Te gustaría ver nuestro menú?</p>
+                      <p className="text-xs text-gray-500 text-right mt-1">10:46 AM</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-end mb-3">
+                    <div className="bg-[#dcf8c6] p-3 rounded-lg max-w-[80%] shadow-sm">
+                      <p className="text-sm text-gray-800">¡Sí, por favor!</p>
+                      <p className="text-xs text-gray-500 text-right mt-1">10:46 AM</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-start">
+                    <div className="bg-[#f1f1f1] p-3 rounded-lg max-w-[80%] shadow-sm">
+                      <p className="text-sm text-gray-800">Aquí lo tienes 👉 <span className="text-blue-600 underline">Ver menú</span></p>
+                      <p className="text-xs text-gray-500 text-right mt-1">10:47 AM</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="absolute -bottom-6 -right-6 bg-white rounded-lg p-3 shadow-lg hidden md:block">
+                  <div className="text-primary font-bold text-lg">24/7</div>
+                  <div className="text-gray-600 text-sm">Siempre activo</div>
+                </div>
               </div>
             </div>
           </div>
