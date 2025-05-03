@@ -245,31 +245,36 @@ const SuccessYContenido: React.FC = () => {
           </div>
         </section>
 
-        {/* Social Media section */}
-        <section className="py-16 container mx-auto px-4">
-          <div className="text-center max-w-2xl mx-auto animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-400">
-            <h3 className="text-xl font-semibold text-[#1B3A57] mb-6">
-              {t('follow_for_updates')}
-            </h3>
-            <div className="flex justify-center space-x-6">
-              <button 
-                className="flex items-center justify-center w-14 h-14 rounded-full bg-[#1B3A57] text-white hover:bg-[#4A90E2] transition-colors duration-200"
-                onClick={() => openExternalLink('https://www.linkedin.com/in/juancvelam/')}
-              >
-                <Linkedin size={24} />
-              </button>
-              <button 
-                className="flex items-center justify-center w-14 h-14 rounded-full bg-[#1B3A57] text-white hover:bg-[#4A90E2] transition-colors duration-200"
-                onClick={() => openExternalLink('https://www.instagram.com/')}
-              >
-                <Instagram size={24} />
-              </button>
-              <button 
-                className="flex items-center justify-center w-14 h-14 rounded-full bg-[#1B3A57] text-white hover:bg-[#4A90E2] transition-colors duration-200"
-                onClick={() => openExternalLink('https://www.youtube.com/')}
-              >
-                <Youtube size={24} />
-              </button>
+        {/* Updated Social Media section - positioned just before the Footer */}
+        <section className="py-12 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-2xl mx-auto animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-400">
+              <h3 className="text-xl font-semibold text-[#1B3A57] mb-6">
+                {t('follow_for_updates')}
+              </h3>
+              <div className="flex justify-center space-x-6">
+                <button 
+                  className="flex items-center justify-center w-14 h-14 rounded-full bg-[#1B3A57] text-white hover:scale-110 hover:bg-[#4A90E2] transition-all duration-300"
+                  onClick={() => openExternalLink('https://www.linkedin.com/in/juancvelam/')}
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin size={24} />
+                </button>
+                <button 
+                  className="flex items-center justify-center w-14 h-14 rounded-full bg-[#1B3A57] text-white hover:scale-110 hover:bg-[#4A90E2] transition-all duration-300"
+                  onClick={() => openExternalLink('https://www.instagram.com/aumatia.ai/?next=%2F')}
+                  aria-label="Instagram"
+                >
+                  <Instagram size={24} />
+                </button>
+                <button 
+                  className="flex items-center justify-center w-14 h-14 rounded-full bg-[#1B3A57] text-white hover:scale-110 hover:bg-[#4A90E2] transition-all duration-300"
+                  onClick={() => openExternalLink('https://www.youtube.com/@Aumatia')}
+                  aria-label="YouTube"
+                >
+                  <Youtube size={24} />
+                </button>
+              </div>
             </div>
           </div>
         </section>
