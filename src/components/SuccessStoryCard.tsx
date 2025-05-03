@@ -19,12 +19,14 @@ interface SuccessStoryCardProps {
 const SuccessStoryCard: React.FC<SuccessStoryCardProps> = ({ story }) => {
   return (
     <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col h-full">
-      <div className="relative pb-[100%] w-full">
-        <img 
-          src={story.image} 
-          alt={`${story.businessName}`}
-          className="absolute inset-0 w-full h-full object-cover" 
-        />
+      <div className="relative flex justify-center p-6">
+        <div className="w-32 h-32 rounded-full overflow-hidden">
+          <img 
+            src={story.image} 
+            alt={`${story.businessName}`}
+            className="w-full h-full object-cover" 
+          />
+        </div>
       </div>
       
       <div className="p-6 flex flex-col flex-grow">
@@ -39,15 +41,9 @@ const SuccessStoryCard: React.FC<SuccessStoryCardProps> = ({ story }) => {
           📍 {story.location}, {story.sector}
         </p>
         
-        <blockquote className="italic text-gray-700 mb-6 flex-grow">
+        <blockquote className="italic text-gray-700 flex-grow">
           "{story.testimonial}"
         </blockquote>
-        
-        <button 
-          className="mt-auto self-start px-4 py-2 rounded text-[#4A90E2] font-medium hover:bg-blue-50 transition-colors"
-        >
-          Ver más
-        </button>
       </div>
     </div>
   );

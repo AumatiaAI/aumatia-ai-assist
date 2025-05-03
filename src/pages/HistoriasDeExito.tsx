@@ -2,10 +2,12 @@
 import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import CtaSection from '@/components/CtaSection';
 import SuccessStoryCard from '@/components/SuccessStoryCard';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const HistoriasDeExito: React.FC = () => {
+  const { t } = useLanguage();
+  
   const successStories = [
     {
       id: 1,
@@ -71,10 +73,10 @@ const HistoriasDeExito: React.FC = () => {
       <section className="bg-gradient-to-b from-[#F1F7FE] to-white pt-32 pb-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-[#1B3A57]">
-            Historias de Éxito
+            {t('success_stories_title')}
           </h1>
           <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
-            Descubre cómo negocios reales están automatizando su atención y aumentando ventas con nuestros agentes de IA.
+            {t('success_stories_subtitle')}
           </p>
         </div>
       </section>
@@ -94,7 +96,7 @@ const HistoriasDeExito: React.FC = () => {
       <section className="py-20 bg-[#1B3A57] text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            ¿Listo para ser nuestra próxima historia de éxito?
+            {t('ready_for_success')}
           </h2>
           
           <div className="mb-6">
@@ -102,7 +104,7 @@ const HistoriasDeExito: React.FC = () => {
               href="/productos" 
               className="inline-block bg-[#4A90E2] hover:bg-[#4A90E2]/90 transition-colors px-8 py-3 rounded-md text-white font-medium"
             >
-              Automatiza tu negocio hoy
+              {t('automate_business')}
             </a>
           </div>
         </div>

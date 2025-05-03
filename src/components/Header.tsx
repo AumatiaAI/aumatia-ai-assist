@@ -3,10 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { MenuIcon } from 'lucide-react';
 import MobileMenu from './MobileMenu';
+import LanguageSelector from './LanguageSelector';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,21 +45,25 @@ const Header: React.FC = () => {
           </a>
 
           <nav className="hidden md:flex items-center space-x-6 ml-auto">
-            <a href="/" className="text-gray-800 hover:text-primary font-medium">Home</a>
-            <a href="/productos" className="text-gray-800 hover:text-primary font-medium">Productos</a>
-            <a href="/historias-de-exito" className="text-gray-800 hover:text-primary font-medium">Historias de Éxito</a>
-            <a href="/recursos.html" className="text-gray-800 hover:text-primary font-medium">Recursos</a>
+            <a href="/" className="text-gray-800 hover:text-primary font-medium">{t('home')}</a>
+            <a href="/productos" className="text-gray-800 hover:text-primary font-medium">{t('products')}</a>
+            <a href="/historias-de-exito" className="text-gray-800 hover:text-primary font-medium">{t('success_stories')}</a>
+            <a href="/recursos.html" className="text-gray-800 hover:text-primary font-medium">{t('resources')}</a>
+            <LanguageSelector />
             <Button asChild className="bg-primary hover:bg-primary/90 text-white ml-2 px-6">
-              <a href="/login">Login</a>
+              <a href="/login">{t('login')}</a>
             </Button>
           </nav>
 
-          <button 
-            className="md:hidden text-gray-800 focus:outline-none"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            <MenuIcon size={24} />
-          </button>
+          <div className="flex items-center md:hidden">
+            <LanguageSelector />
+            <button 
+              className="ml-2 text-gray-800 focus:outline-none"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <MenuIcon size={24} />
+            </button>
+          </div>
         </div>
       </header>
 
