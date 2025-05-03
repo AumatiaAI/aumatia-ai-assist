@@ -1,6 +1,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const testimonials = [
   {
@@ -68,28 +69,27 @@ const Testimonials: React.FC = () => {
           {testimonials.map((testimonial, index) => (
             <div 
               key={index}
-              className="testimonial-card bg-gray-50 rounded-xl p-6 opacity-0 translate-y-10 transition-all duration-700"
+              className="testimonial-card bg-gray-50 rounded-xl p-6 opacity-0 translate-y-10 transition-all duration-700 flex flex-col items-center"
               style={{ transitionDelay: `${index * 200}ms` }}
             >
-              <div className="mb-4 overflow-hidden rounded-lg">
-                <img 
-                  src={testimonial.image} 
-                  alt={`${testimonial.business}`}
-                  className="w-full aspect-[4/3] object-cover"
-                />
-              </div>
-              <p className="text-lg font-medium mb-4">"{testimonial.quote}"</p>
-              <div className="text-primary font-bold">
-                {testimonial.name}, <span className="text-gray-700 font-normal">{testimonial.business}</span>
+              <Avatar className="w-20 h-20 mb-4">
+                <AvatarImage src={testimonial.image} alt={testimonial.name} />
+                <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+              </Avatar>
+              <p className="text-lg italic mb-4 text-center">"{testimonial.quote}"</p>
+              <div className="text-center">
+                <span className="text-primary font-bold">{testimonial.name}</span>
+                <span className="text-gray-700">, {testimonial.business}</span>
               </div>
             </div>
           ))}
         </div>
         
         <div className="mt-12 text-center">
-          <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10">
-            <a href="/historias-de-exito.html">Ver más historias</a>
+          <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg">
+            <a href="/DomiAI.html">Quiero un asistente como este</a>
           </Button>
+          <p className="text-gray-500 mt-2 text-sm">Actívalo en minutos. Sin código.</p>
         </div>
       </div>
     </section>

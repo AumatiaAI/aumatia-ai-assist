@@ -40,7 +40,7 @@ const Hero: React.FC = () => {
               <Button asChild size="lg" className="bg-white text-primary hover:bg-white/90 font-medium text-lg px-8">
                 <a href="/DomiAI.html">Crea tu agente gratis</a>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10 font-medium text-lg px-8">
+              <Button asChild variant="outline" size="lg" className="bg-white text-primary border-primary hover:bg-[#E3F2FD] font-medium text-lg px-8">
                 <a href="#como-funciona">Ver cómo funciona</a>
               </Button>
             </div>

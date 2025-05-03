@@ -1,33 +1,23 @@
 
 import React, { useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Settings, Rocket, Clock, Users } from 'lucide-react';
+import { Clock, DollarSign, Rocket } from 'lucide-react';
 
 const benefitsData = [
   {
-    icon: <MessageSquare size={32} className="text-primary" />,
+    icon: <Clock size={48} className="text-primary" />,
     title: "Contesta como tú, 24/7",
-    description: "Tu asistente responde incluso cuando estás ocupado."
+    description: "Nunca más pierdas un cliente por no responder. Tu asistente lo hace por ti, incluso mientras duermes."
   },
   {
-    icon: <Settings size={32} className="text-primary" />,
-    title: "Sin código",
-    description: "Solo responde unas preguntas y lo activamos."
-  },
-  {
-    icon: <Rocket size={32} className="text-primary" />,
-    title: "Listo en minutos",
-    description: "Empieza a vender hoy mismo."
-  },
-  {
-    icon: <Clock size={32} className="text-primary" />,
+    icon: <DollarSign size={48} className="text-primary" />,
     title: "A precio de emprendedor",
-    description: "Tecnología pro, sin cuotas altas."
+    description: "Tecnología pro, sin cuotas altas. Ideal para negocios que están creciendo."
   },
   {
-    icon: <Users size={32} className="text-primary" />,
-    title: "Para negocios reales",
-    description: "Ideal para tiendas, restaurantes, peluquerías."
+    icon: <Rocket size={48} className="text-primary" />,
+    title: "Empieza hoy mismo",
+    description: "Configúralo una vez y empieza a vender desde el primer día. Sin complicaciones."
   }
 ];
 
@@ -68,29 +58,30 @@ const Benefits: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700">
-            Lo haces una vez. Vende todos los días.
+            Automatiza hoy. Vende todos los días, sin estar conectado.
           </h2>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {benefitsData.map((benefit, index) => (
             <div 
               key={index}
-              className="benefit-card bg-white border border-gray-100 rounded-xl p-6 shadow-sm hover:shadow-md transition-all opacity-0 translate-y-10 duration-500"
+              className="benefit-card bg-white border border-gray-100 rounded-xl p-8 shadow-sm hover:shadow-md transition-all opacity-0 translate-y-10 duration-500"
             >
-              <div className="mb-4">
+              <div className="mb-4 flex justify-center">
                 {benefit.icon}
               </div>
-              <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
-              <p className="text-gray-600">{benefit.description}</p>
+              <h3 className="text-xl font-bold mb-3 text-center">{benefit.title}</h3>
+              <p className="text-gray-600 text-center">{benefit.description}</p>
             </div>
           ))}
         </div>
         
         <div className="mt-12 text-center">
           <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg">
-            <a href="/DomiAI.html">Quiero mi asistente</a>
+            <a href="/DomiAI.html">Activa tu asistente ahora</a>
           </Button>
+          <p className="text-gray-500 mt-2 text-sm">Sin tarjeta. Sin compromiso.</p>
         </div>
       </div>
     </section>
