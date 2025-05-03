@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Products from "./pages/Products";
 import DomiAI from "./pages/DomiAI";
 import NotFound from "./pages/NotFound";
+import CrearCuenta from "./pages/CrearCuenta";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/productos" element={<Products />} />
           <Route path="/DomiAI" element={<DomiAI />} />
+          <Route path="/crear-cuenta" element={<CrearCuenta />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
