@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 type Language = 'es' | 'en' | 'pt';
@@ -364,7 +363,7 @@ const translations = {
   'follow_for_updates': {
     'es': 'Síguenos para más actualizaciones y casos reales:',
     'en': 'Follow us for more updates and real cases:',
-    'pt': 'Siga-nos para mais atualizações e casos reais:'
+    'pt': 'Siga-nos para mais atualizações e casos reales:'
   },
   'no_country_found': {
     'es': 'No se encontró ningún país',
@@ -375,6 +374,17 @@ const translations = {
     'es': 'Buscar país...',
     'en': 'Search country...',
     'pt': 'Buscar país...'
+  },
+  // Busca el objeto translations y añade estas dos nuevas claves:
+  try_it_free: {
+    es: "Pruébalo Gratis",
+    en: "Try it for Free",
+    pt: "Experimente Grátis"
+  },
+  get_free_demo: {
+    es: "Contacta ahora y obtén una demostración gratuita",
+    en: "Contact us now and get a free demo",
+    pt: "Entre em contato agora e obtenha uma demonstração gratuita"
   }
 };
 
