@@ -19,6 +19,7 @@ import PagoExitoso from "./pages/PagoExitoso";
 import Dashboard from "./pages/Dashboard";
 import HistoriasDeExito from "./pages/HistoriasDeExito";
 import Recursos from "./pages/Recursos";
+import DetalleRecurso from "./pages/DetalleRecurso";
 import Descarga from "./pages/Descarga";
 import SuccessYContenido from "./pages/SuccessYContenido";
 import AdminRecursos from "./pages/AdminRecursos";
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/productos" element={<Products />} />
             <Route path="/recursos" element={<Recursos />} />
+            <Route path="/recursos/detalle" element={<DetalleRecurso />} />
             <Route path="/DomiAI" element={<DomiAI />} />
             <Route path="/crear-cuenta" element={<CrearCuenta />} />
             <Route path="/login" element={<Login />} />
