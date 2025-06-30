@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,9 +6,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { toast } from '@/hooks/use-toast';
 import { Plus, Edit, Trash2, Copy, CheckCircle, Eye } from 'lucide-react';
-
-// Mock admin validation - replace with real authentication
-const ADMIN_KEY = 'admin123';
 
 interface WorkflowStep {
   id: string;
@@ -37,8 +33,6 @@ interface Tutorial {
 }
 
 const AdminRecursos = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [adminKey, setAdminKey] = useState('');
   const [workflows, setWorkflows] = useState<Workflow[]>([]);
   const [tutorials, setTutorials] = useState<Tutorial[]>([]);
   const [isWorkflowModalOpen, setIsWorkflowModalOpen] = useState(false);
@@ -60,22 +54,6 @@ const AdminRecursos = () => {
     }
   }, []);
 
-  const handleLogin = () => {
-    if (adminKey === ADMIN_KEY) {
-      setIsAuthenticated(true);
-      toast({
-        title: "Acceso autorizado",
-        description: "Bienvenido al panel de administración",
-      });
-    } else {
-      toast({
-        title: "Acceso denegado",
-        description: "Clave de administrador incorrecta",
-        variant: "destructive",
-      });
-    }
-  };
-
   const saveWorkflows = (newWorkflows: Workflow[]) => {
     localStorage.setItem('admin_workflows', JSON.stringify(newWorkflows));
     setWorkflows(newWorkflows);
@@ -93,36 +71,6 @@ const AdminRecursos = () => {
       description: "Instrucción copiada al portapapeles",
     });
   };
-
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-[#1B3A57] to-[#4A90E2] flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold text-[#1B3A57]">
-              Panel de Administración
-            </CardTitle>
-            <p className="text-gray-600">Ingresa la clave de administrador</p>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Input
-              type="password"
-              placeholder="Clave de administrador"
-              value={adminKey}
-              onChange={(e) => setAdminKey(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
-            />
-            <Button 
-              onClick={handleLogin}
-              className="w-full bg-[#4A90E2] hover:bg-[#1B3A57] transition-colors"
-            >
-              Acceder
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
