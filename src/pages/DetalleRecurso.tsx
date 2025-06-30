@@ -127,7 +127,7 @@ const DetalleRecurso: React.FC = () => {
             descripcion: data.descripcion,
             imagen_url: data.imagen_url,
             link_descarga: data.link_descarga,
-            pasos: data.pasos
+            pasos: Array.isArray(data.pasos) ? data.pasos : (data.pasos ? [data.pasos] : null)
           };
           setFlujo(flujoData);
         }
