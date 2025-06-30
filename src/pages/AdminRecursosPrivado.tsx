@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -77,7 +76,14 @@ const AdminRecursosPrivado = () => {
         .order('creado_en', { ascending: false });
 
       if (flujosError) throw flujosError;
-      setFlujos(flujosData || []);
+      
+      // Convertir los datos de Supabase al formato esperado
+      const formattedFlujos: Flujo[] = (flujosData || []).map(flujo => ({
+        ...flujo,
+        pasos: Array.isArray(flujo.pasos) ? flujo.pasos as WorkflowStep[] : []
+      }));
+      
+      setFlujos(formattedFlujos);
 
       // Cargar tutoriales
       const { data: tutorialesData, error: tutorialesError } = await supabase
