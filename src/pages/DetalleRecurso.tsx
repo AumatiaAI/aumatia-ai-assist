@@ -107,7 +107,16 @@ const DetalleRecurso: React.FC = () => {
           });
           navigate('/recursos');
         } else {
-          setFlujo(data);
+          // Transform the data to match our interface
+          const flujoData: Flujo = {
+            id: data.id,
+            nombre: data.nombre,
+            descripcion: data.descripcion,
+            imagen_url: data.imagen_url,
+            link_descarga: data.link_descarga,
+            pasos: Array.isArray(data.pasos) ? data.pasos : null
+          };
+          setFlujo(flujoData);
         }
       }
     } catch (error) {
