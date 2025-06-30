@@ -21,6 +21,7 @@ import HistoriasDeExito from "./pages/HistoriasDeExito";
 import Recursos from "./pages/Recursos";
 import Descarga from "./pages/Descarga";
 import SuccessYContenido from "./pages/SuccessYContenido";
+import AdminRecursos from "./pages/AdminRecursos";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ const App = () => (
             <Route path="/historias-de-exito" element={<HistoriasDeExito />} />
             <Route path="/descarga" element={<Descarga />} />
             <Route path="/success-y-contenido" element={<SuccessYContenido />} />
+            <Route path="/admin-recursos" element={<AdminRecursos />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
