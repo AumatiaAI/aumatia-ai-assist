@@ -65,6 +65,41 @@ const AdminRecursosPrivado = () => {
     }
   };
 
+  // Función para convertir Json a WorkflowStep[] de forma segura
+  const parseWorkflowSteps = (pasosJson: any): WorkflowStep[] => {
+    if (!pasosJson) return [];
+    
+    try {
+      // Si ya es un array válido
+      if (Array.isArray(pasosJson)) {
+        return pasosJson.map((paso: any) => ({
+          id: paso.id || '',
+          descripcion: paso.descripcion || '',
+          codigo: paso.codigo || '',
+          videoUrl: paso.videoUrl || undefined
+        }));
+      }
+      
+      // Si es un string JSON, parsearlo
+      if (typeof pasosJson === 'string') {
+        const parsed = JSON.parse(pasosJson);
+        if (Array.isArray(parsed)) {
+          return parsed.map((paso: any) => ({
+            id: paso.id || '',
+            descripcion: paso.descripcion || '',
+            codigo: paso.codigo || '',
+            videoUrl: paso.videoUrl || undefined
+          }));
+        }
+      }
+      
+      return [];
+    } catch (error) {
+      console.error('Error parsing workflow steps:', error);
+      return [];
+    }
+  };
+
   // Cargar datos desde Supabase
   const loadData = async () => {
     setIsLoading(true);
@@ -80,7 +115,7 @@ const AdminRecursosPrivado = () => {
       // Convertir los datos de Supabase al formato esperado
       const formattedFlujos: Flujo[] = (flujosData || []).map(flujo => ({
         ...flujo,
-        pasos: Array.isArray(flujo.pasos) ? flujo.pasos as WorkflowStep[] : []
+        pasos: parseWorkflowSteps(flujo.pasos)
       }));
       
       setFlujos(formattedFlujos);
