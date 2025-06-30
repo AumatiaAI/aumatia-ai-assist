@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Checkbox } from "@/components/ui/checkbox";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { toast } from '@/hooks/use-toast';
-import { Download, ArrowLeft, Copy } from 'lucide-react';
+import { Download, ArrowLeft, Copy, CheckCircle } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -43,6 +44,7 @@ const DetalleRecurso: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [flujo, setFlujo] = useState<Flujo | null>(null);
   const [tutorial, setTutorial] = useState<Tutorial | null>(null);
+  const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
   
   const id = searchParams.get('id');
   const tipo = searchParams.get('tipo');
@@ -175,6 +177,23 @@ const DetalleRecurso: React.FC = () => {
         variant: "destructive",
       });
     }
+  };
+
+  const toggleStepCompletion = (stepIndex: number) => {
+    const newCompletedSteps = new Set(completedSteps);
+    if (completedSteps.has(stepIndex)) {
+      newCompletedSteps.delete(stepIndex);
+    } else {
+      newCompletedSteps.add(stepIndex);
+    }
+    setCompletedSteps(newCompletedSteps);
+  };
+
+  const isStepVisible = (stepIndex: number): boolean => {
+    // First step is always visible
+    if (stepIndex === 0) return true;
+    // Show step if previous step is completed
+    return completedSteps.has(stepIndex - 1);
   };
 
   const extractYouTubeId = (url: string): string | null => {
@@ -360,25 +379,73 @@ const DetalleRecurso: React.FC = () => {
                   <h3 className="text-2xl font-semibold text-[#1B3A57] mb-6 flex items-center">
                     📋 Pasos del Workflow
                   </h3>
-                  <Accordion type="single" collapsible className="w-full space-y-4">
-                    {workflowSteps.map((paso, index) => (
-                      <AccordionItem 
-                        key={paso.id || index} 
-                        value={`step-${index}`}
-                        className="border border-gray-200 rounded-lg overflow-hidden"
-                      >
-                        <AccordionTrigger className="text-left p-6 hover:bg-gray-50 hover:no-underline">
-                          <div className="flex items-center w-full">
-                            <span className="bg-[#4A90E2] text-white rounded-full w-10 h-10 flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
-                              {index + 1}
-                            </span>
-                            <span className="font-semibold text-[#1B3A57] text-lg">
-                              Paso {index + 1}
-                            </span>
-                          </div>
-                        </AccordionTrigger>
-                        <AccordionContent className="p-6 pt-0 bg-white">
-                          <div className="space-y-6 ml-14">
+                  
+                  {/* Progress indicator */}
+                  <div className="mb-8 bg-gray-100 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-[#1B3A57]">
+                        Progreso: {completedSteps.size} / {workflowSteps.length} pasos completados
+                      </span>
+                      <span className="text-sm text-gray-600">
+                        {Math.round((completedSteps.size / workflowSteps.length) * 100)}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        className="bg-[#4A90E2] h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${(completedSteps.size / workflowSteps.length) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-6">
+                    {workflowSteps.map((paso, index) => {
+                      const isCompleted = completedSteps.has(index);
+                      const isVisible = isStepVisible(index);
+                      
+                      if (!isVisible) {
+                        return (
+                          <Card key={index} className="border-2 border-dashed border-gray-200 bg-gray-50">
+                            <CardContent className="p-6 text-center">
+                              <div className="text-gray-400 mb-2">🔒</div>
+                              <p className="text-gray-500">
+                                Completa el paso anterior para desbloquear este paso
+                              </p>
+                            </CardContent>
+                          </Card>
+                        );
+                      }
+
+                      return (
+                        <Card 
+                          key={index} 
+                          className={`border-2 transition-all duration-300 ${
+                            isCompleted 
+                              ? 'border-green-200 bg-green-50' 
+                              : 'border-[#4A90E2] bg-white'
+                          }`}
+                        >
+                          <CardHeader className="pb-4">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-4">
+                                <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold ${
+                                  isCompleted ? 'bg-green-500' : 'bg-[#4A90E2]'
+                                }`}>
+                                  {isCompleted ? <CheckCircle size={24} /> : index + 1}
+                                </div>
+                                <div>
+                                  <h4 className="text-xl font-semibold text-[#1B3A57]">
+                                    Paso {index + 1}
+                                  </h4>
+                                  {isCompleted && (
+                                    <span className="text-green-600 text-sm font-medium">✅ Completado</span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </CardHeader>
+                          
+                          <CardContent className="space-y-6">
                             {/* Step Description */}
                             {paso.descripcion && (
                               <div className="prose max-w-none">
@@ -414,17 +481,35 @@ const DetalleRecurso: React.FC = () => {
                             {/* Step Video */}
                             {paso.video && (
                               <div>
-                                <h4 className="text-lg font-medium text-[#1B3A57] mb-3 flex items-centers">
+                                <h5 className="text-lg font-medium text-[#1B3A57] mb-3 flex items-center">
                                   🎬 Video explicativo
-                                </h4>
+                                </h5>
                                 {renderVideoEmbed(paso.video)}
                               </div>
                             )}
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
+
+                            {/* Completion Checkbox */}
+                            <div className="pt-4 border-t border-gray-200">
+                              <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
+                                <Checkbox
+                                  id={`step-${index}`}
+                                  checked={isCompleted}
+                                  onCheckedChange={() => toggleStepCompletion(index)}
+                                  className="data-[state=checked]:bg-[#4A90E2] data-[state=checked]:border-[#4A90E2]"
+                                />
+                                <label 
+                                  htmlFor={`step-${index}`}
+                                  className="text-sm font-medium text-[#1B3A57] cursor-pointer"
+                                >
+                                  ✅ Marcar este paso como completado
+                                </label>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
 
