@@ -22,6 +22,7 @@ import Recursos from "./pages/Recursos";
 import Descarga from "./pages/Descarga";
 import SuccessYContenido from "./pages/SuccessYContenido";
 import AdminRecursos from "./pages/AdminRecursos";
+import AdminRecursosPrivado from "./pages/AdminRecursosPrivado";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
             <Route path="/descarga" element={<Descarga />} />
             <Route path="/success-y-contenido" element={<SuccessYContenido />} />
             <Route path="/admin-recursos" element={<AdminRecursos />} />
+            <Route path="/admin_recursos" element={<AdminRecursosPrivado />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

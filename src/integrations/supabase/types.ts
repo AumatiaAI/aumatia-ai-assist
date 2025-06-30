@@ -11,6 +11,7 @@ export type Database = {
     Tables: {
       flujos: {
         Row: {
+          actualizado_en: string | null
           creado_en: string | null
           descripcion: string | null
           id: string
@@ -20,6 +21,7 @@ export type Database = {
           pasos: Json | null
         }
         Insert: {
+          actualizado_en?: string | null
           creado_en?: string | null
           descripcion?: string | null
           id?: string
@@ -29,6 +31,7 @@ export type Database = {
           pasos?: Json | null
         }
         Update: {
+          actualizado_en?: string | null
           creado_en?: string | null
           descripcion?: string | null
           id?: string
@@ -41,6 +44,7 @@ export type Database = {
       }
       tutoriales: {
         Row: {
+          actualizado_en: string | null
           creado_en: string | null
           descripcion: string | null
           id: string
@@ -49,6 +53,7 @@ export type Database = {
           video_url: string | null
         }
         Insert: {
+          actualizado_en?: string | null
           creado_en?: string | null
           descripcion?: string | null
           id?: string
@@ -57,6 +62,7 @@ export type Database = {
           video_url?: string | null
         }
         Update: {
+          actualizado_en?: string | null
           creado_en?: string | null
           descripcion?: string | null
           id?: string
