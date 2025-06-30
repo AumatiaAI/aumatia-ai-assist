@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Checkbox } from "@/components/ui/checkbox";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -29,11 +30,10 @@ interface Tutorial {
 }
 
 interface WorkflowStep {
-  id?: number;
+  id: string | number;
   descripcion: string;
   codigo?: string;
-  video?: string;
-  video_url?: string;
+  videoUrl?: string;
 }
 
 const DetalleRecurso: React.FC = () => {
@@ -67,16 +67,16 @@ const DetalleRecurso: React.FC = () => {
         id: step.id || index + 1,
         descripcion: step.descripcion || step.description || `Paso ${index + 1}`,
         codigo: step.codigo || step.code || '',
-        video: step.video || step.video_url || ''
+        videoUrl: step.videoUrl || step.video_url || step.video || ''
       }));
     }
     
     if (typeof stepsData === 'object' && stepsData !== null) {
       return [{
-        id: 1,
+        id: stepsData.id || 1,
         descripcion: stepsData.descripcion || stepsData.description || 'Paso único',
         codigo: stepsData.codigo || stepsData.code || '',
-        video: stepsData.video || stepsData.video_url || ''
+        videoUrl: stepsData.videoUrl || stepsData.video_url || stepsData.video || ''
       }];
     }
     
@@ -121,23 +121,13 @@ const DetalleRecurso: React.FC = () => {
           });
           navigate('/recursos');
         } else {
-          let parsedPasos: any[] = [];
-          
-          if (data.pasos) {
-            if (Array.isArray(data.pasos)) {
-              parsedPasos = data.pasos;
-            } else if (typeof data.pasos === 'object') {
-              parsedPasos = [data.pasos];
-            }
-          }
-          
           const flujoData: Flujo = {
             id: data.id,
             nombre: data.nombre,
             descripcion: data.descripcion,
             imagen_url: data.imagen_url,
             link_descarga: data.link_descarga,
-            pasos: parsedPasos
+            pasos: data.pasos as any[]
           };
           setFlujo(flujoData);
         }
@@ -223,9 +213,9 @@ const DetalleRecurso: React.FC = () => {
     if (!videoUrl) {
       return (
         <div className="w-full aspect-video rounded-lg bg-gray-100 flex items-center justify-center">
-          <div className="text-center text-gray-500">
+          <div className="text-center text-gray-500 p-4">
             <div className="text-4xl mb-2">🎥</div>
-            <p className="text-sm">Este paso aún no tiene video</p>
+            <p className="text-sm font-medium">Este paso no tiene video aún</p>
           </div>
         </div>
       );
@@ -420,115 +410,118 @@ const DetalleRecurso: React.FC = () => {
                       const isAccessible = index === 0 || completedSteps.has(index - 1);
                       
                       return (
-                        <Collapsible key={index} open={isActive && isAccessible} onOpenChange={() => {}}>
-                          <Card className={`border-2 transition-all duration-300 ${
-                            isCompleted 
-                              ? 'border-green-200 bg-green-50' 
-                              : isActive && isAccessible
-                              ? 'border-[#4A90E2] bg-white shadow-md'
-                              : 'border-gray-200 bg-gray-50'
-                          }`}>
-                            
-                            <CollapsibleTrigger asChild>
-                              <CardHeader className="cursor-pointer hover:bg-gray-50 transition-colors">
-                                <div className="flex items-center justify-between">
-                                  <div className="flex items-center space-x-4">
-                                    <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold ${
-                                      isCompleted ? 'bg-green-500' : 'bg-[#4A90E2]'
-                                    }`}>
-                                      {isCompleted ? <CheckCircle size={24} /> : index + 1}
+                        <Card key={paso.id} className={`border-2 transition-all duration-300 ${
+                          isCompleted 
+                            ? 'border-green-200 bg-green-50' 
+                            : isActive && isAccessible
+                            ? 'border-[#4A90E2] bg-white shadow-md'
+                            : 'border-gray-200 bg-gray-50'
+                        }`}>
+                          
+                          <CardHeader className="pb-4">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-4">
+                                <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold ${
+                                  isCompleted ? 'bg-green-500' : 'bg-[#4A90E2]'
+                                }`}>
+                                  {isCompleted ? <CheckCircle size={24} /> : index + 1}
+                                </div>
+                                <div>
+                                  <h4 className="text-xl font-semibold text-[#1B3A57]">
+                                    Paso {index + 1}
+                                  </h4>
+                                  {isCompleted && (
+                                    <span className="text-green-600 text-sm font-medium">✅ Completado</span>
+                                  )}
+                                  {!isAccessible && (
+                                    <span className="text-gray-500 text-sm">🔒 Bloqueado</span>
+                                  )}
+                                </div>
+                              </div>
+                              
+                              {isAccessible && (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => setCurrentStep(isActive ? -1 : index)}
+                                  className="text-[#4A90E2]"
+                                >
+                                  {isActive ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+                                </Button>
+                              )}
+                            </div>
+                          </CardHeader>
+                          
+                          {isActive && isAccessible && (
+                            <CardContent className="pt-0">
+                              {/* Two Column Layout */}
+                              <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                                {/* Left Column - Content (60%) */}
+                                <div className="lg:col-span-3 space-y-6">
+                                  {/* Step Description */}
+                                  {paso.descripcion && (
+                                    <div className="prose max-w-none">
+                                      <p className="text-gray-700 leading-relaxed text-base">
+                                        {paso.descripcion}
+                                      </p>
                                     </div>
-                                    <div>
-                                      <h4 className="text-xl font-semibold text-[#1B3A57]">
-                                        Paso {index + 1}
-                                      </h4>
-                                      {isCompleted && (
-                                        <span className="text-green-600 text-sm font-medium">✅ Completado</span>
-                                      )}
-                                      {!isAccessible && (
-                                        <span className="text-gray-500 text-sm">🔒 Bloqueado</span>
-                                      )}
-                                    </div>
-                                  </div>
+                                  )}
                                   
-                                  {isAccessible && (
-                                    <div className="text-[#4A90E2]">
-                                      {isActive ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+                                  {/* Code Block */}
+                                  {paso.codigo && (
+                                    <div className="bg-gray-50 border border-gray-200 rounded-lg overflow-hidden">
+                                      <div className="flex items-center justify-between bg-gray-100 px-4 py-3 border-b border-gray-200">
+                                        <span className="text-sm font-medium text-gray-700 flex items-center">
+                                          💻 Código
+                                        </span>
+                                        <Button
+                                          size="sm"
+                                          variant="outline"
+                                          onClick={() => copyToClipboard(paso.codigo!)}
+                                          className="text-xs hover:bg-[#4A90E2] hover:text-white"
+                                        >
+                                          <Copy size={14} className="mr-1" />
+                                          📋 Copiar
+                                        </Button>
+                                      </div>
+                                      <pre className="bg-gray-900 text-green-400 p-4 text-sm overflow-x-auto font-mono">
+                                        <code>{paso.codigo}</code>
+                                      </pre>
+                                    </div>
+                                  )}
+
+                                  {/* Complete Step Checkbox */}
+                                  {!isCompleted && (
+                                    <div className="flex items-center space-x-3 pt-4">
+                                      <Checkbox
+                                        id={`step-${index}`}
+                                        checked={false}
+                                        onCheckedChange={() => completeStep(index)}
+                                        className="w-5 h-5"
+                                      />
+                                      <label 
+                                        htmlFor={`step-${index}`}
+                                        className="text-base font-medium text-[#1B3A57] cursor-pointer"
+                                      >
+                                        ✅ Completar este paso
+                                      </label>
                                     </div>
                                   )}
                                 </div>
-                              </CardHeader>
-                            </CollapsibleTrigger>
-                            
-                            {isAccessible && (
-                              <CollapsibleContent>
-                                <CardContent className="pt-0">
-                                  {/* Two Column Layout */}
-                                  <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-                                    {/* Left Column - Content (60%) */}
-                                    <div className="lg:col-span-3 space-y-6">
-                                      {/* Step Description */}
-                                      {paso.descripcion && (
-                                        <div className="prose max-w-none">
-                                          <p className="text-gray-700 leading-relaxed text-base">
-                                            {paso.descripcion}
-                                          </p>
-                                        </div>
-                                      )}
-                                      
-                                      {/* Code Block */}
-                                      {paso.codigo && (
-                                        <div className="bg-gray-50 border border-gray-200 rounded-lg overflow-hidden">
-                                          <div className="flex items-center justify-between bg-gray-100 px-4 py-3 border-b border-gray-200">
-                                            <span className="text-sm font-medium text-gray-700 flex items-center">
-                                              💻 Código
-                                            </span>
-                                            <Button
-                                              size="sm"
-                                              variant="outline"
-                                              onClick={() => copyToClipboard(paso.codigo!)}
-                                              className="text-xs hover:bg-[#4A90E2] hover:text-white"
-                                            >
-                                              <Copy size={14} className="mr-1" />
-                                              📋 Copiar
-                                            </Button>
-                                          </div>
-                                          <pre className="bg-gray-900 text-green-400 p-4 text-sm overflow-x-auto">
-                                            <code>{paso.codigo}</code>
-                                          </pre>
-                                        </div>
-                                      )}
 
-                                      {/* Complete Step Button */}
-                                      {!isCompleted && (
-                                        <div className="pt-4">
-                                          <Button
-                                            onClick={() => completeStep(index)}
-                                            className="bg-[#4A90E2] hover:bg-[#1B3A57] text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
-                                            size="lg"
-                                          >
-                                            <CheckCircle size={18} className="mr-2" />
-                                            ✅ Completar este paso
-                                          </Button>
-                                        </div>
-                                      )}
-                                    </div>
-
-                                    {/* Right Column - Video (40%) */}
-                                    <div className="lg:col-span-2">
-                                      <div className="sticky top-4">
-                                        <h5 className="text-lg font-medium text-[#1B3A57] mb-3 flex items-center">
-                                          🎬 Video del paso
-                                        </h5>
-                                        {renderVideoEmbed(paso.video || '')}
-                                      </div>
-                                    </div>
+                                {/* Right Column - Video (40%) */}
+                                <div className="lg:col-span-2">
+                                  <div className="sticky top-4">
+                                    <h5 className="text-lg font-medium text-[#1B3A57] mb-3 flex items-center">
+                                      🎬 Video del paso
+                                    </h5>
+                                    {renderVideoEmbed(paso.videoUrl || '')}
                                   </div>
-                                </CardContent>
-                              </CollapsibleContent>
-                            )}
-                          </Card>
-                        </Collapsible>
+                                </div>
+                              </div>
+                            </CardContent>
+                          )}
+                        </Card>
                       );
                     })}
                   </div>
