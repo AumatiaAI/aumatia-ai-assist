@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -50,7 +51,7 @@ const AdminRecursosPrivado = () => {
   // Verificar acceso de administrador
   const handleAdminLogin = () => {
     // Sistema simple de autenticación - en producción usar Supabase Auth
-    if (adminPassword === 'admin123') {
+    if (adminPassword === '123456789') {
       setIsAdmin(true);
       toast({
         title: "Acceso concedido",
